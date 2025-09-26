@@ -38,8 +38,35 @@ app.use(
 );
 
 // CORS configuration
+const allowedOrigins = [
+  "https://mh-expenses-app-render-frontend-v2.onrender.com",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://localhost:3001"
+];
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "*",
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if the origin is in the allowed list
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // If CORS_ORIGIN is set in environment, use it
+    if (process.env.CORS_ORIGIN && process.env.CORS_ORIGIN.split(',').includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // In development, allow all origins
+    if (process.env.NODE_ENV === 'development') {
+      return callback(null, true);
+    }
+    
+    return callback(new Error('Not allowed by CORS'));
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
     "Content-Type",
