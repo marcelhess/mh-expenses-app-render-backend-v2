@@ -132,6 +132,13 @@ const importData = async () => {
         description: "Start date of fiscal year (MM-DD)",
       });
 
+      await Setting.create({
+        key: "costPerKilometer",
+        value: parseFloat(process.env.DEFAULT_COST_PER_KM) || 0.70,
+        description: "Default cost per kilometer for expense calculations",
+        isDefault: true,
+      });
+
       console.log("Settings created...");
     } catch (err) {
       console.error("Error creating settings:", err.message);
