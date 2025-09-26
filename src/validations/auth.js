@@ -23,8 +23,8 @@ export const registerValidation = [
 
   check("role")
     .optional()
-    .isIn(["admin", "sales_rep"])
-    .withMessage("Role must be either admin or sales_rep"),
+    .isIn(["admin", "sales_rep", "user"])
+    .withMessage("Role must be either admin, sales_rep, or user"),
 
   check("status")
     .optional()
