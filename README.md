@@ -1,24 +1,29 @@
-# Expense Tracking Application
+# Expense Tracking Application - Backend
 
 A MERN-Stack application for AussenDienst GmbH to manage and track travel expenses for sales representatives.
+
+## Project Structure
+
+This is the **backend API** repository. The frontend React application is available at:
+**Frontend Repository**: [mh-expenses-app-render-frontend-v2](https://github.com/marcelhess/mh-expenses-app-render-frontend-v2)
 
 ## Features
 
 - User authentication with role-based access control
-- CRUD operations for expense management
+- RESTful API for expense management
 - Google Maps integration for route calculation
 - Automatic expense calculation based on predefined rates
-- Visual dashboards for expense analytics
+- Analytics endpoints for expense data
 - Export functionality for reports (PDF, CSV)
-- Responsive design for all devices
+- Comprehensive logging and error handling
 
 ## Tech Stack
 
 - **MongoDB**: Document database for flexible data storage
 - **Express.js**: Backend API framework
-- **React.js**: Frontend UI library
 - **Node.js**: JavaScript runtime environment
 - **Google Maps API**: For route calculations and address autocompletion
+- **JWT**: For authentication and authorization
 
 ## Getting Started
 
@@ -30,33 +35,53 @@ A MERN-Stack application for AussenDienst GmbH to manage and track travel expens
 
 ### Installation
 
-1. Clone the repository
+1. Clone the backend repository
 
-   ```
-   git clone <repository-url>
-   cd <repository-directory>
+   ```bash
+   git clone https://github.com/marcelhess/mh-expenses-app-render-backend-v2.git
+   cd mh-expenses-app-render-backend-v2
    ```
 
-2. Install dependencies
+2. Install backend dependencies
 
-   ```
+   ```bash
    npm install
    ```
 
-3. Configure environment variables
-   Create a `.env` file in the root directory and add:
+3. For the complete application, also clone and set up the frontend:
 
+   ```bash
+   git clone https://github.com/marcelhess/mh-expenses-app-render-frontend-v2.git
+   cd mh-expenses-app-render-frontend-v2
+   npm install
    ```
+
+4. Configure backend environment variables
+   Create a `.env` file in the backend root directory and add:
+
+   ```env
    PORT=5000
    MONGODB_URI=<your-mongodb-uri>
    JWT_SECRET=<your-jwt-secret>
    GOOGLE_MAPS_API_KEY=<your-google-maps-api-key>
+   GEMINI_API_KEY=<your-gemini-api-key>
+   NODE_ENV=development
    ```
 
-4. Start the development server
-   ```
+5. Start the backend development server
+   ```bash
    npm run dev
    ```
+
+   The backend API will be available at `http://localhost:5000`
+
+6. Configure and start the frontend (in the frontend repository):
+   ```bash
+   # In the frontend directory
+   npm run dev
+   ```
+
+   The frontend will be available at `http://localhost:5173`
 
 ## API Endpoints
 
