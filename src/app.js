@@ -42,30 +42,34 @@ const allowedOrigins = [
   "https://mh-expenses-app-render-frontend-v2.onrender.com",
   "http://localhost:5173",
   "http://localhost:3000",
-  "http://localhost:3001"
+  "http://localhost:3001",
+  "http://localhost:5174",
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
+
     // Check if the origin is in the allowed list
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
-    
+
     // If CORS_ORIGIN is set in environment, use it
-    if (process.env.CORS_ORIGIN && process.env.CORS_ORIGIN.split(',').includes(origin)) {
+    if (
+      process.env.CORS_ORIGIN &&
+      process.env.CORS_ORIGIN.split(",").includes(origin)
+    ) {
       return callback(null, true);
     }
-    
+
     // In development, allow all origins
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       return callback(null, true);
     }
-    
-    return callback(new Error('Not allowed by CORS'));
+
+    return callback(new Error("Not allowed by CORS"));
   },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
@@ -91,29 +95,36 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(generalLimiter);
 
 // Logging middleware
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== "test") {
   app.use(morganMiddleware);
 }
 
 // Connect to database (only if not in test environment)
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== "test") {
   connectDB();
 }
 
 // API Documentation (only in development or when explicitly enabled)
-if (process.env.NODE_ENV !== "production" || process.env.ENABLE_SWAGGER === "true") {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-    explorer: true,
-    customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: "Marcel Expenses API Documentation",
-    swaggerOptions: {
-      persistAuthorization: true,
-      displayRequestDuration: true,
-      filter: true,
-      showExtensions: true,
-      showCommonExtensions: true,
-    }
-  }));
+if (
+  process.env.NODE_ENV !== "production" ||
+  process.env.ENABLE_SWAGGER === "true"
+) {
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      explorer: true,
+      customCss: ".swagger-ui .topbar { display: none }",
+      customSiteTitle: "Marcel Expenses API Documentation",
+      swaggerOptions: {
+        persistAuthorization: true,
+        displayRequestDuration: true,
+        filter: true,
+        showExtensions: true,
+        showCommonExtensions: true,
+      },
+    })
+  );
 }
 
 // API Documentation JSON endpoint
